@@ -1,458 +1,287 @@
-# landingzykos
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZYKOS - The Toaster Token | Pacientes & Comunidad</title>
-    <meta name="description" content="Narrativas punk de salud mental alternativa. Lived experience. Community-driven.">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+# 🐋 ECOSISTEMA ZYKOS - ARQUITECTURA COMPLETA
 
-        body {
-            font-family: 'Courier New', monospace;
-            background: #000;
-            color: #00ff00;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+## 📋 ESTRUCTURA DEL PROYECTO
 
-        /* Glitch effect */
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
+```
+zykos-ecosystem/
+│
+├── zykotoken-ar/          # Portal PSYKOSWORLD
+│   ├── public/
+│   │   └── _redirects
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Header.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   └── BifurcacionRouter.jsx
+│   │   ├── pages/
+│   │   │   ├── index.html
+│   │   │   └── welcome.html
+│   │   └── styles/
+│   │       └── main.css
+│   ├── netlify.toml
+│   └── package.json
+│
+├── zykos-ar/              # Site Pacientes
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── WalletConnect.jsx
+│   │   │   ├── BountyCard.jsx
+│   │   │   └── Navigation.jsx
+│   │   ├── pages/
+│   │   │   ├── index.html
+│   │   │   ├── bounties.html
+│   │   │   └── narrativas.html
+│   │   └── styles/
+│   │       └── punk.css
+│   ├── netlify.toml
+│   └── package.json
+│
+└── docs/
+    ├── DNS-SETUP.md
+    ├── DEPLOYMENT.md
+    └── MEMBERFUL-CONFIG.md
+```
 
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #000 0%, #1a0000 100%);
-            position: relative;
-            padding: 2rem;
-        }
+---
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                repeating-linear-gradient(
-                    0deg,
-                    rgba(255, 107, 0, 0.05) 0px,
-                    transparent 2px,
-                    transparent 4px,
-                    rgba(255, 107, 0, 0.05) 6px
-                );
-            pointer-events: none;
-        }
+## 🎯 DOMINIOS Y FUNCIONES
 
-        .hero-content {
-            text-align: center;
-            z-index: 1;
-            max-width: 1200px;
-        }
+### **1. zykotoken.ar - PSYKOSWORLD (Portal Hub)**
+- **Función:** Gateway central con bifurcación inteligente
+- **Hosting:** Netlify
+- **Features:**
+  - Landing page con detección de audiencia
+  - Memberful integration
+  - Router a zykos.ar o psykotoken.com
+  - Sistema de onboarding
 
-        .logo {
-            font-size: clamp(4rem, 15vw, 10rem);
-            font-weight: 900;
-            letter-spacing: -0.05em;
-            color: #FF6B00;
-            text-shadow: 
-                3px 3px 0 #ff0000,
-                -3px -3px 0 #00ff00;
-            animation: glitch 3s infinite;
-            margin-bottom: 1rem;
-        }
+### **2. zykos.ar - PACIENTES (ZYK)**
+- **Función:** Narrativa pacientes/afectados
+- **Hosting:** Netlify
+- **Features:**
+  - Design punk/disruptivo
+  - Wallet connect (MetaMask)
+  - Bounties display
+  - Community stories
+  - Token info accesible
 
-        .tagline {
-            font-size: clamp(1rem, 3vw, 2rem);
-            color: #FFA500;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-        }
+### **3. psykotoken.com - MÉDICOS (PSYKOS)**
+- **Función:** Portal profesional/institucional
+- **Hosting:** Squarespace (mantener actual)
+- **Features:**
+  - Clinical backing
+  - Research & partnerships
+  - Documentación académica
+  - NO TOCAR (ya funciona)
 
-        .manifesto {
-            max-width: 800px;
-            margin: 0 auto 3rem;
-            padding: 2rem;
-            background: rgba(255, 107, 0, 0.05);
-            border: 2px solid #FF6B00;
-            border-radius: 0;
-        }
+---
 
-        .manifesto p {
-            color: #ccc;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
+## 🔧 CONFIGURACIÓN DNS
 
-        .manifesto strong {
-            color: #FF6B00;
-        }
+### **Registros para NIC.ar**
 
-        /* Navigation */
-        .nav {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 3rem;
-        }
+#### **ZYKOS.AR:**
+```
+Tipo: A
+Host: @
+Valor: 75.2.60.5
+TTL: 3600
 
-        .nav-link {
-            padding: 1rem 2rem;
-            background: transparent;
-            border: 2px solid #FF6B00;
-            color: #FF6B00;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            font-family: 'Courier New', monospace;
-        }
+Tipo: CNAME
+Host: www
+Valor: apex-loadbalancer.netlify.com
+TTL: 3600
+```
 
-        .nav-link:hover {
-            background: #FF6B00;
-            color: #000;
-            transform: scale(1.05);
-        }
+#### **ZYKOTOKEN.AR:**
+```
+Tipo: A
+Host: @
+Valor: 75.2.60.5
+TTL: 3600
 
-        /* Sections */
-        .section {
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+Tipo: CNAME
+Host: www
+Valor: apex-loadbalancer.netlify.com
+TTL: 3600
+```
 
-        .section-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            color: #FF6B00;
-            margin-bottom: 2rem;
-            text-align: center;
-            text-transform: uppercase;
-        }
+---
 
-        /* Bounties Grid */
-        .bounties-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
+## 🚀 DEPLOYMENT
 
-        .bounty-card {
-            background: rgba(255, 107, 0, 0.05);
-            border: 2px solid #FF6B00;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
+### **Opción A: Deploy Manual (Simple)**
+1. Crear cuenta en Netlify con: zyko@psykostoken.com
+2. Importar repos desde GitHub
+3. Click "Deploy" - automático
 
-        .bounty-card:hover {
-            background: rgba(255, 107, 0, 0.1);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3);
-        }
+### **Opción B: Deploy CLI (Avanzado)**
+```bash
+# Instalar Netlify CLI
+npm install -g netlify-cli
 
-        .bounty-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
+# Login
+netlify login
 
-        .bounty-title {
-            font-size: 1.5rem;
-            color: #FFA500;
-            margin-bottom: 0.5rem;
-        }
+# Deploy zykotoken.ar
+cd zykotoken-ar
+netlify deploy --prod
 
-        .bounty-desc {
-            color: #999;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
+# Deploy zykos.ar
+cd ../zykos-ar
+netlify deploy --prod
+```
 
-        .bounty-reward {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: #FF6B00;
-            color: #000;
-            font-weight: 700;
-        }
+---
 
-        /* Wallet Section */
-        .wallet-section {
-            background: rgba(255, 107, 0, 0.05);
-            border: 2px solid #FF6B00;
-            padding: 3rem;
-            text-align: center;
-            margin-top: 3rem;
-        }
+## 🎨 DESIGN SYSTEM
 
-        .wallet-btn {
-            padding: 1.5rem 3rem;
-            background: #FF6B00;
-            color: #000;
-            border: none;
-            font-size: 1.2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Courier New', monospace;
-        }
+### **ZYKOTOKEN.AR (Portal)**
+```css
+:root {
+  --primary: #FF8C00;
+  --secondary: #1A1A1A;
+  --accent: #FFA500;
+  --bg: #000000;
+  --text: #FFFFFF;
+}
+```
 
-        .wallet-btn:hover {
-            background: #FFA500;
-            transform: scale(1.05);
-        }
+### **ZYKOS.AR (Punk)**
+```css
+:root {
+  --punk-orange: #FF6B00;
+  --punk-red: #FF0000;
+  --bg: #000000;
+  --text: #00FF00;
+  --glitch: #00FF00;
+}
+```
 
-        .wallet-status {
-            margin-top: 1rem;
-            color: #00ff00;
-            font-size: 0.9rem;
-        }
+---
 
-        /* Footer */
-        .footer {
-            background: #0a0000;
-            padding: 3rem 2rem;
-            text-align: center;
-            border-top: 2px solid #FF6B00;
-        }
+## 💳 WALLET CONFIGURATION
 
-        .footer-text {
-            color: #666;
-            margin-bottom: 1rem;
-        }
+### **Admin Wallet:**
+```
+0x6aea80e20849bee22fdc54317ea8ec761ece44f7
+```
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-        }
+**Uso:**
+- Recibir pagos crypto del merch
+- Treasury del ecosistema
+- Bounties payments
 
-        .footer-links a {
-            color: #FF6B00;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
+---
 
-        .footer-links a:hover {
-            color: #FFA500;
-        }
+## 📧 MEMBERFUL SETUP
 
-        /* Status */
-        .status {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 107, 0, 0.2);
-            border: 1px solid #FF6B00;
-            color: #FF6B00;
-            font-size: 0.8rem;
-            z-index: 1000;
-            text-transform: uppercase;
-        }
+### **Account Info:**
+- **Email:** zyko@psykostoken.com
+- **Site:** zykosworld
 
-        @media (max-width: 768px) {
-            .bounties-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Status -->
-    <div class="status">● ZYK MODE ACTIVO</div>
+### **Plans:**
+```
+1. Community Member (FREE)
+   - Acceso básico a tropos
+   - Forum access
+   - Basic bounties
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="logo">ZYKOS</h1>
-            <p class="tagline">The Toaster Token</p>
-            
-            <div class="manifesto">
-                <p>
-                    <strong>Somos affected people.</strong> No expertos. No gurús. No salvadores.
-                </p>
-                <p>
-                    Este token es un experimento punk en salud mental alternativa. 
-                    Construido cooperativamente. Financiado por bounties. Gobernado por la comunidad.
-                </p>
-                <p>
-                    <strong>Los tokens se tuestan</strong> cuando se usan para servicios reales. 
-                    Pero nadie sabe por qué... todavía.
-                </p>
-            </div>
+2. ZYKOS Patron ($10/month)
+   - Todo lo anterior +
+   - Exclusive content
+   - Priority bounties
+   - Governance voting
 
-            <nav class="nav">
-                <a href="#bounties" class="nav-link">Bounties</a>
-                <a href="#narrativas" class="nav-link">Narrativas</a>
-                <a href="#tokenomics" class="nav-link">Tokenomics</a>
-                <a href="https://psykosworld.com" class="nav-link">Portal</a>
-            </nav>
-        </div>
-    </section>
+3. Professional ($25/month)
+   - Todo lo anterior +
+   - Access a psykotoken.com research
+   - Clinical data
+   - Networking events
+```
 
-    <!-- Bounties Section -->
-    <section id="bounties" class="section">
-        <h2 class="section-title">🎯 Open Bounties</h2>
-        <p style="text-align: center; color: #999; margin-bottom: 2rem;">
-            Contribuí al ecosistema. Ganá ZKS. No necesitás ser experto.
-        </p>
+---
 
-        <div class="bounties-grid">
-            <div class="bounty-card">
-                <div class="bounty-icon">🔍</div>
-                <h3 class="bounty-title">Research: Community Mental Health</h3>
-                <p class="bounty-desc">
-                    Documenta iniciativas de salud mental auto-gestionadas en tu región.
-                </p>
-                <span class="bounty-reward">500 ZKS</span>
-            </div>
+## 🔐 CREDENCIALES
 
-            <div class="bounty-card">
-                <div class="bounty-icon">📝</div>
-                <h3 class="bounty-title">Alternative Narratives</h3>
-                <p class="bounty-desc">
-                    Escribe sobre salud mental fuera del paradigma psiquiátrico tradicional.
-                </p>
-                <span class="bounty-reward">300 ZKS</span>
-            </div>
+### **NIC.ar:**
+- Email: gonzaloperezcortizo@gmail.com
+- Pass: Estudio1859 o Estudio5918
 
-            <div class="bounty-card">
-                <div class="bounty-icon">💻</div>
-                <h3 class="bounty-title">Dev: Community Tools</h3>
-                <p class="bounty-desc">
-                    Desarrolla herramientas que conecten comunidades de salud mental.
-                </p>
-                <span class="bounty-reward">1000 ZKS</span>
-            </div>
+### **GitHub:**
+- Repos: Públicos (sin necesidad de login para ver)
 
-            <div class="bounty-card">
-                <div class="bounty-icon">🎨</div>
-                <h3 class="bounty-title">Design & Communication</h3>
-                <p class="bounty-desc">
-                    Crea assets visuales para la comunidad ZYKOS.
-                </p>
-                <span class="bounty-reward">400 ZKS</span>
-            </div>
-        </div>
-    </section>
+### **Netlify:**
+- Crear con: zyko@psykostoken.com
+- Deploy automático desde GitHub
 
-    <!-- Wallet Section -->
-    <section class="section">
-        <div class="wallet-section">
-            <h2 class="section-title">Conectar Wallet</h2>
-            <p style="color: #999; margin-bottom: 2rem;">
-                Conectá tu wallet para acceder a bounties, votar en governance y más.
-            </p>
-            <button class="wallet-btn" onclick="connectWallet()">
-                🦊 Connect MetaMask
-            </button>
-            <div id="wallet-status" class="wallet-status"></div>
-        </div>
-    </section>
+---
 
-    <!-- Tokenomics Section -->
-    <section id="tokenomics" class="section">
-        <h2 class="section-title">📊 Tokenomics</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
-            <div style="text-align: center; padding: 2rem; border: 2px solid #FF6B00;">
-                <div style="font-size: 3rem; color: #FFA500; margin-bottom: 1rem;">100M</div>
-                <div style="color: #999;">TOTAL SUPPLY</div>
-            </div>
-            <div style="text-align: center; padding: 2rem; border: 2px solid #FF6B00;">
-                <div style="font-size: 3rem; color: #FFA500; margin-bottom: 1rem;">$0.05</div>
-                <div style="color: #999;">PRECIO INICIAL</div>
-            </div>
-            <div style="text-align: center; padding: 2rem; border: 2px solid #FF6B00;">
-                <div style="font-size: 3rem; color: #FFA500; margin-bottom: 1rem;">$0.12</div>
-                <div style="color: #999;">TARGET PRICE</div>
-            </div>
-            <div style="text-align: center; padding: 2rem; border: 2px solid #FF6B00;">
-                <div style="font-size: 3rem; color: #FFA500; margin-bottom: 1rem;">100</div>
-                <div style="color: #999;">POOLS</div>
-            </div>
-        </div>
-    </section>
+## 📊 ROADMAP
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p class="footer-text">
-            <strong>ZYKOS</strong> © 2025 - Co-construcción Cooperativa
-        </p>
-        <div class="footer-links">
-            <a href="https://psykosworld.com">PSYKOSWORLD (Portal)</a>
-            <a href="https://psykotoken.com">PSYKOS (Profesionales)</a>
-            <a href="#contact">Contacto</a>
-            <a href="#docs">Docs</a>
-        </div>
-        <p style="color: #555; font-size: 0.8rem; max-width: 800px; margin: 2rem auto 0;">
-            ⚠️ ZYKOS es un meme token experimental. No tiene utilidad garantizada. 
-            No es consejo financiero ni médico. DYOR. Community decides el destino.
-        </p>
-    </footer>
+### **Fase 1: Infraestructura (HOY)**
+- [x] Arquitectura definida
+- [ ] Repos GitHub creados
+- [ ] Código base generado
+- [ ] DNS configurado
 
-    <script>
-        // Wallet connection (simplified)
-        async function connectWallet() {
-            const statusEl = document.getElementById('wallet-status');
-            
-            if (typeof window.ethereum !== 'undefined') {
-                try {
-                    const accounts = await ethereum.request({ 
-                        method: 'eth_requestAccounts' 
-                    });
-                    
-                    statusEl.innerHTML = `✓ Connected: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
-                    statusEl.style.color = '#00ff00';
-                    
-                    console.log('Wallet connected:', accounts[0]);
-                    console.log('Admin wallet:', '0x6aea80e20849bee22fdc54317ea8ec761ece44f7');
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                    statusEl.innerHTML = '❌ Error conectando wallet';
-                    statusEl.style.color = '#ff0000';
-                }
-            } else {
-                statusEl.innerHTML = '⚠️ MetaMask no detectado. Instalar desde metamask.io';
-                statusEl.style.color = '#FFA500';
-            }
-        }
+### **Fase 2: Deploy (MAÑANA)**
+- [ ] Sites en Netlify
+- [ ] SSL/TLS activo
+- [ ] Cross-linking funcional
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
+### **Fase 3: Features (PRÓXIMOS DÍAS)**
+- [ ] Memberful integration
+- [ ] Wallet connect
+- [ ] Bounties system
+- [ ] Analytics (Plausible)
 
-        console.log('ZYKOS loaded - Pacientes & Comunidad');
-    </script>
-</body>
-</html>
+---
+
+## 🆘 SOPORTE
+
+### **Si algo falla:**
+
+1. **DNS no propaga:**
+   - Esperar 24-48h
+   - Verificar en: https://dnschecker.org
+
+2. **Netlify deploy error:**
+   - Check build logs
+   - Contactar: support@netlify.com
+
+3. **Memberful issues:**
+   - Docs: https://memberful.com/help
+
+---
+
+## 🔗 LINKS ÚTILES
+
+- **Netlify Docs:** https://docs.netlify.com
+- **NIC.ar Panel:** https://nic.ar
+- **GitHub Repos:** (se generarán y compartirán)
+- **Memberful Dashboard:** https://zykosworld.memberful.com
+
+---
+
+## ✅ CHECKLIST FINAL
+
+```
+☐ DNS configurado en NIC.ar
+☐ Repos GitHub públicos creados
+☐ Netlify sites deployados
+☐ SSL/TLS activo
+☐ Memberful account creado
+☐ Wallet configurada
+☐ Cross-site navigation funcional
+☐ Analytics instalado
+☐ Testing completo
+☐ Documentación entregada
+```
+
+---
+
+**Última actualización:** 2025-01-11
+**Contacto:** zyko@psykostoken.com
+**Wallet:** 0x6aea80e20849bee22fdc54317ea8ec761ece44f7
