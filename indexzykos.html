@@ -1,445 +1,332 @@
-landingzykos
-<title>ZYKOS - The Toaster Token | Pacientes & Comunidad</title>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Courier New', monospace;
-        background: #000;
-        color: #00ff00;
-        line-height: 1.6;
-        overflow-x: hidden;
-    }
-
-    /* Glitch effect */
-    @keyframes glitch {
-        0% { transform: translate(0); }
-        20% { transform: translate(-2px, 2px); }
-        40% { transform: translate(-2px, -2px); }
-        60% { transform: translate(2px, 2px); }
-        80% { transform: translate(2px, -2px); }
-        100% { transform: translate(0); }
-    }
-
-    /* Hero */
-    .hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #000 0%, #1a0000 100%);
-        position: relative;
-        padding: 2rem;
-    }
-
-    .hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: 
-            repeating-linear-gradient(
-                0deg,
-                rgba(255, 107, 0, 0.05) 0px,
-                transparent 2px,
-                transparent 4px,
-                rgba(255, 107, 0, 0.05) 6px
-            );
-        pointer-events: none;
-    }
-
-    .hero-content {
-        text-align: center;
-        z-index: 1;
-        max-width: 1200px;
-    }
-
-    .logo {
-        font-size: clamp(4rem, 15vw, 10rem);
-        font-weight: 900;
-        letter-spacing: -0.05em;
-        color: #FF6B00;
-        text-shadow: 
-            3px 3px 0 #ff0000,
-            -3px -3px 0 #00ff00;
-        animation: glitch 3s infinite;
-        margin-bottom: 1rem;
-    }
-
-    .tagline {
-        font-size: clamp(1rem, 3vw, 2rem);
-        color: #FFA500;
-        margin-bottom: 2rem;
-        text-transform: uppercase;
-        letter-spacing: 0.3em;
-    }
-
-    .manifesto {
-        max-width: 800px;
-        margin: 0 auto 3rem;
-        padding: 2rem;
-        background: rgba(255, 107, 0, 0.05);
-        border: 2px solid #FF6B00;
-        border-radius: 0;
-    }
-
-    .manifesto p {
-        color: #ccc;
-        font-size: 1.1rem;
-        line-height: 1.8;
-        margin-bottom: 1rem;
-    }
-
-    .manifesto strong {
-        color: #FF6B00;
-    }
-
-    /* Navigation */
-    .nav {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-        margin-bottom: 3rem;
-    }
-
-    .nav-link {
-        padding: 1rem 2rem;
-        background: transparent;
-        border: 2px solid #FF6B00;
-        color: #FF6B00;
-        text-decoration: none;
-        text-transform: uppercase;
-        font-weight: 700;
-        transition: all 0.3s ease;
-        font-family: 'Courier New', monospace;
-    }
-
-    .nav-link:hover {
-        background: #FF6B00;
-        color: #000;
-        transform: scale(1.05);
-    }
-
-    /* Sections */
-    .section {
-        padding: 4rem 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .section-title {
-        font-size: clamp(2rem, 5vw, 3rem);
-        color: #FF6B00;
-        margin-bottom: 2rem;
-        text-align: center;
-        text-transform: uppercase;
-    }
-
-    /* Bounties Grid */
-    .bounties-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
-    }
-
-    .bounty-card {
-        background: rgba(255, 107, 0, 0.05);
-        border: 2px solid #FF6B00;
-        padding: 2rem;
-        transition: all 0.3s ease;
-    }
-
-    .bounty-card:hover {
-        background: rgba(255, 107, 0, 0.1);
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3);
-    }
-
-    .bounty-icon {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
-
-    .bounty-title {
-        font-size: 1.5rem;
-        color: #FFA500;
-        margin-bottom: 0.5rem;
-    }
-
-    .bounty-desc {
-        color: #999;
-        margin-bottom: 1rem;
-        font-size: 0.9rem;
-    }
-
-    .bounty-reward {
-        display: inline-block;
-        padding: 0.5rem 1rem;
-        background: #FF6B00;
-        color: #000;
-        font-weight: 700;
-    }
-
-    /* Wallet Section */
-    .wallet-section {
-        background: rgba(255, 107, 0, 0.05);
-        border: 2px solid #FF6B00;
-        padding: 3rem;
-        text-align: center;
-        margin-top: 3rem;
-    }
-
-    .wallet-btn {
-        padding: 1.5rem 3rem;
-        background: #FF6B00;
-        color: #000;
-        border: none;
-        font-size: 1.2rem;
-        font-weight: 900;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-family: 'Courier New', monospace;
-    }
-
-    .wallet-btn:hover {
-        background: #FFA500;
-        transform: scale(1.05);
-    }
-
-    .wallet-status {
-        margin-top: 1rem;
-        color: #00ff00;
-        font-size: 0.9rem;
-    }
-
-    /* Footer */
-    .footer {
-        background: #0a0000;
-        padding: 3rem 2rem;
-        text-align: center;
-        border-top: 2px solid #FF6B00;
-    }
-
-    .footer-text {
-        color: #666;
-        margin-bottom: 1rem;
-    }
-
-    .footer-links {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        flex-wrap: wrap;
-        margin-bottom: 2rem;
-    }
-
-    .footer-links a {
-        color: #FF6B00;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    .footer-links a:hover {
-        color: #FFA500;
-    }
-
-    /* Status */
-    .status {
-        position: fixed;
-        top: 1rem;
-        right: 1rem;
-        padding: 0.5rem 1rem;
-        background: rgba(255, 107, 0, 0.2);
-        border: 1px solid #FF6B00;
-        color: #FF6B00;
-        font-size: 0.8rem;
-        z-index: 1000;
-        text-transform: uppercase;
-    }
-
-    @media (max-width: 768px) {
-        .bounties-grid {
-            grid-template-columns: 1fr;
+🔥 CÓDIGO MINIMALISTA: "Less is More"
+Entiendo perfectamente. Menos marketing, más realidad. Estilo punk, directo, sin promesas.
+📦 LANDING HONESTO Y DIRECTO
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSYKOS - The Toaster Token</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-    }
-</style>
-● ZYK MODE ACTIVO
-<!-- Hero -->
-<section class="hero">
-    <div class="hero-content">
-        <h1 class="logo">ZYKOS</h1>
-        <p class="tagline">The Toaster Token</p>
-        
-        <div class="manifesto">
-            <p>
-                <strong>Somos affected people.</strong> No expertos. No gurús. No salvadores.
-            </p>
-            <p>
-                Este token es un experimento punk en salud mental alternativa. 
-                Construido cooperativamente. Financiado por bounties. Gobernado por la comunidad.
-            </p>
-            <p>
-                <strong>Los tokens se tuestan</strong> cuando se usan para servicios reales. 
-                Pero nadie sabe por qué... todavía.
-            </p>
-        </div>
 
-        <nav class="nav">
-            <a href="#bounties" class="nav-link">Bounties</a>
-            <a href="#narrativas" class="nav-link">Narrativas</a>
-            <a href="#tokenomics" class="nav-link">Tokenomics</a>
-            <a href="https://psykosworld.com" class="nav-link">Portal</a>
-        </nav>
-    </div>
-</section>
-
-<!-- Bounties Section -->
-<section id="bounties" class="section">
-    <h2 class="section-title">🎯 Open Bounties</h2>
-    <p style="text-align: center; color: #999; margin-bottom: 2rem;">
-        Contribuí al ecosistema. Ganá ZKS. No necesitás ser experto.
-    </p>
-
-    <div class="bounties-grid">
-        <div class="bounty-card">
-            <div class="bounty-icon">🔍</div>
-            <h3 class="bounty-title">Research: Community Mental Health</h3>
-            <p class="bounty-desc">
-                Documenta iniciativas de salud mental auto-gestionadas en tu región.
-            </p>
-            <span class="bounty-reward">500 ZKS</span>
-        </div>
-
-        <div class="bounty-card">
-            <div class="bounty-icon">📝</div>
-            <h3 class="bounty-title">Alternative Narratives</h3>
-            <p class="bounty-desc">
-                Escribe sobre salud mental fuera del paradigma psiquiátrico tradicional.
-            </p>
-            <span class="bounty-reward">300 ZKS</span>
-        </div>
-
-        <div class="bounty-card">
-            <div class="bounty-icon">💻</div>
-            <h3 class="bounty-title">Dev: Community Tools</h3>
-            <p class="bounty-desc">
-                Desarrolla herramientas que conecten comunidades de salud mental.
-            </p>
-            <span class="bounty-reward">1000 ZKS</span>
-        </div>
-
-        <div class="bounty-card">
-            <div class="bounty-icon">🎨</div>
-            <h3 class="bounty-title">Design & Communication</h3>
-            <p class="bounty-desc">
-                Crea assets visuales para la comunidad ZYKOS.
-            </p>
-            <span class="bounty-reward">400 ZKS</span>
-        </div>
-    </div>
-</section>
-
-<!-- Wallet Section -->
-<section class="section">
-    <div class="wallet-section">
-        <h2 class="section-title">Conectar Wallet</h2>
-        <p style="color: #999; margin-bottom: 2rem;">
-            Conectá tu wallet para acceder a bounties, votar en governance y más.
-        </p>
-        <button class="wallet-btn" onclick="connectWallet()">
-            🦊 Connect MetaMask
-        </button>
-        <div id="wallet-status" class="wallet-status"></div>
-    </div>
-</section>
-
-<!-- Tokenomics Section -->
-<section id="tokenomics" class="section">
-    <h2 class="section-title">📊 Tokenomics</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
-        <div style="text-align: center; padding: 2rem; border: 2px solid #FF6B00;">
-            <div style="font-size: 3rem; color: #FFA500; margin-bottom: 1rem;">100M</div>
-            <div style="color: #999;">TOTAL SUPPLY</div>
-        </div>
-        <div style="text-align: center; padding: 2rem; border: 2px solid #FF6B00;">
-            <div style="font-size: 3rem; color: #FFA500; margin-bottom: 1rem;">$0.05</div>
-            <div style="color: #999;">PRECIO INICIAL</div>
-        </div>
-        <div style="text-align: center; padding: 2rem; border: 2px solid #FF6B00;">
-            <div style="font-size: 3rem; color: #FFA500; margin-bottom: 1rem;">$0.12</div>
-            <div style="color: #999;">TARGET PRICE</div>
-        </div>
-        <div style="text-align: center; padding: 2rem; border: 2px solid #FF6B00;">
-            <div style="font-size: 3rem; color: #FFA500; margin-bottom: 1rem;">100</div>
-            <div style="color: #999;">POOLS</div>
-        </div>
-    </div>
-</section>
-
-<!-- Footer -->
-<footer class="footer">
-    <p class="footer-text">
-        <strong>ZYKOS</strong> © 2025 - Co-construcción Cooperativa
-    </p>
-    <div class="footer-links">
-        <a href="https://psykosworld.com">PSYKOSWORLD (Portal)</a>
-        <a href="https://psykotoken.com">PSYKOS (Profesionales)</a>
-        <a href="#contact">Contacto</a>
-        <a href="#docs">Docs</a>
-    </div>
-    <p style="color: #555; font-size: 0.8rem; max-width: 800px; margin: 2rem auto 0;">
-        ⚠️ ZYKOS es un meme token experimental. No tiene utilidad garantizada. 
-        No es consejo financiero ni médico. DYOR. Community decides el destino.
-    </p>
-</footer>
-
-<script>
-    // Wallet connection (simplified)
-    async function connectWallet() {
-        const statusEl = document.getElementById('wallet-status');
-        
-        if (typeof window.ethereum !== 'undefined') {
-            try {
-                const accounts = await ethereum.request({ 
-                    method: 'eth_requestAccounts' 
-                });
-                
-                statusEl.innerHTML = `✓ Connected: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
-                statusEl.style.color = '#00ff00';
-                
-                console.log('Wallet connected:', accounts[0]);
-                console.log('Admin wallet:', '0x6aea80e20849bee22fdc54317ea8ec761ece44f7');
-                
-            } catch (error) {
-                console.error('Error:', error);
-                statusEl.innerHTML = '❌ Error conectando wallet';
-                statusEl.style.color = '#ff0000';
-            }
-        } else {
-            statusEl.innerHTML = '⚠️ MetaMask no detectado. Instalar desde metamask.io';
-            statusEl.style.color = '#FFA500';
+        :root {
+            --orange: #ff6b35;
+            --black: #000;
+            --gray: #0a0a0a;
+            --text: #ccc;
         }
-    }
 
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--black);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.95);
+            border-bottom: 1px solid var(--orange);
+            padding: 15px 0;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--orange);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--orange);
+        }
+
+        /* SECTIONS */
+        section {
+            min-height: 100vh;
+            padding: 100px 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* HERO */
+        #hero {
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 30px;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-title .orange {
+            color: var(--orange);
+        }
+
+        .hero-text {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: var(--text);
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--orange);
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 900;
+            border-radius: 50px;
+            transition: transform 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* CONTENT SECTIONS */
+        h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            color: var(--orange);
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: var(--orange);
+            font-weight: 600;
+        }
+
+        .disclaimer-box {
+            background: rgba(255,200,0,0.1);
+            border-left: 3px solid #ffc800;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .disclaimer-box p {
+            color: #ffc800;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .doc-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,107,53,0.3);
+            padding: 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+        }
+
+        .doc-card:hover {
+            border-color: var(--orange);
+            background: rgba(255,107,53,0.05);
+        }
+
+        .doc-card h3 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .doc-card p {
+            color: var(--text);
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--gray);
+            border-top: 1px solid var(--orange);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        footer a {
+            color: var(--orange);
+            text-decoration: none;
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 15px;
             }
-        });
-    });
+            
+            .nav-links a {
+                font-size: 0.8rem;
+            }
 
-    console.log('ZYKOS loaded - Pacientes & Comunidad');
-</script>
+            .docs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-content">
+            <a href="#hero" class="logo">PSYKOS</a>
+            <ul class="nav-links">
+                <li><a href="#proyecto">Proyecto</a></li>
+                <li><a href="#nodos">Nodos</a></li>
+                <li><a href="#docs">Docs</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="container">
+            <h1 class="hero-title">
+                EL PRIMER<br>
+                <span class="orange">MEMECOIN</span><br>
+                DE SALUD MENTAL
+            </h1>
+            <p class="hero-text">
+                PSYKOS es un memecoin disruptivo.<br>
+                Sin promesas. Sin hype. Solo hechos.
+            </p>
+            <a href="#proyecto" class="cta-btn">Ver Proyecto</a>
+        </div>
+    </section>
+
+    <!-- PROYECTO -->
+    <section id="proyecto">
+        <div class="container">
+            <h2>El Proyecto</h2>
+            <p>
+                PSYKOS es un token meme. No tiene utilidad garantizada. 
+                No prometemos ganancias. No es inversión.
+            </p>
+            <p>
+                Existe un proyecto de backend llamado <span class="highlight">PSYKOS</span> 
+                que opera con infraestructura real de salud mental. 
+                El token y el proyecto están separados.
+            </p>
+            <p>
+                Si en algún momento emerge utilidad, será orgánica. 
+                No hay roadmap. No hay promesas.
+            </p>
+
+            <div class="disclaimer-box">
+                <p>
+                    <strong>⚠️ DISCLAIMER:</strong> 
+                    PSYKOS es un meme token sin valor intrínseco. 
+                    Comprá bajo tu propio riesgo. DYOR. NFA.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NODOS -->
+    <section id="nodos">
+        <div class="container">
+            <h2>Arquitectura de Nodos</h2>
+            <p>
+                El proyecto <span class="highlight">PSYKOS</span> opera como una red de nodos validadores. 
+                Cada nodo aporta capacidad clínica verificable.
+            </p>
+            <p>
+                <span class="highlight">Nodo 0:</span> Clínica José Ingenieros<br>
+                • 50 camas operativas<br>
+                • 40+ años de trayectoria<br>
+                • Validador inicial de la red
+            </p>
+            <p>
+                Cuando la red crezca, nuevos nodos podrán integrarse. 
+                Cada nodo aporta sus propias camas y servicios. 
+                No hay promesas sobre cuándo o cómo.
+            </p>
+            <p>
+                El token no garantiza acceso. El proyecto no garantiza expansión. 
+                Los aumentos programados del token existen, pero son solo mecánica económica.
+            </p>
+        </div>
+    </section>
+
+    <!-- DOCS -->
+    <section id="docs">
+        <div class="container">
+            <h2>Documentación</h2>
+            <p>
+                Todo el código, contratos y documentación técnica están en GitHub. 
+                Transparencia radical. Auditá vos mismo.
+            </p>
+
+            <div class="docs-grid">
+                <a href="https://github.com/zykostoken/landingzykos/blob/main/cPSYKOS%20WORLD%20black%20book.pdf" target="_blank" class="doc-card">
+                    <h3>📖 Black Book</h3>
+                    <p>Arquitectura técnica completa</p>
+                </a>
+
+                <a href="https://github.com/zykostoken/landingzykos/blob/main/BITÃCORA%20TÃCNIC.pdf" target="_blank" class="
